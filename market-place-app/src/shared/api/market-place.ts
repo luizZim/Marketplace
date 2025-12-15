@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 const getBaseURL = () => {
   return Platform.select({
     ios: 'http://localhost:3001',
-    android: 'http://10.0.2.2:3001',
+    android: 'http://192.168.3.240:3001',
   });
 };
 

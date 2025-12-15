@@ -3,7 +3,6 @@ import { useRegisterViewModel } from "../viewModels/Register/useRegister.viewMod
 
 
 export default function Register() {
-
   const props = useRegisterViewModel()
 
   return (
