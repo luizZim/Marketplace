@@ -51,10 +51,10 @@ export const useAppInputViewModel = ({
   }
 
   const getIconColor = () => {
-    if (isFocused) return colors["purple-base"];
     if (isError) return colors.danger;
+    if (isFocused) return colors["purple-base"];
     if (value) return colors["purple-base"];
-    return colors.grays[200]
+    return colors.gray[200]
   }
 
   const handleTextChange = (text: string) => {
@@ -72,6 +72,7 @@ export const useAppInputViewModel = ({
     handleWrapperPress,
     handlePasswordToggle,
     handleTextChange,
-    isFocused
+    isFocused,
+    showPassword
   }
 }
