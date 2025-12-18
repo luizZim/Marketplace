@@ -61,7 +61,7 @@ export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
           secureTextEntry
         />
 
-        <AppButton className="mt-6 " onPress={onSubmit}>Registrar</AppButton>
+        <AppButton className="mt-6" onPress={onSubmit}>Registrar</AppButton>
 
         <View className="mt-16">
           <Text className="text-base text-gray-300 mb-6 ">Já tem uma conta?</Text>
