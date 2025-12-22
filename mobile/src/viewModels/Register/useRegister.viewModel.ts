@@ -3,10 +3,27 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterFormData, registerScheme } from "./register.scheme"
 import { useRegisterMutation } from "../../shared/queries/auth/use-register.mutation"
 import { useUserStore } from "../../shared/store/user-store"
+import { useAppModal } from "../../shared/hooks/useAppModal"
 
 export const useRegisterViewModel = () => {
   const userRegisterMutation = useRegisterMutation()
   const { setSession } = useUserStore()
+  const modals = useAppModal()
+
+  const handleSelectAvatar = () => {
+    modals.showSelection({
+      title: "Selecionar Foto",
+      message: "Escolha uma opção:",
+      options: [
+        {
+          text: "Galeria",
+          icon: "images",
+          variant: "primary",
+          onPress: () => alert("Funcionou")
+        }
+      ]
+    })
+  }
 
   const {
     control,
@@ -33,5 +50,5 @@ export const useRegisterViewModel = () => {
     })
   })
 
-  return { control, errors, onSubmit }
+  return { control, errors, onSubmit, handleSelectAvatar }
 }
