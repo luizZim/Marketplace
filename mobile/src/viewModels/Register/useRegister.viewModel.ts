@@ -20,6 +20,12 @@ export const useRegisterViewModel = () => {
           icon: "images",
           variant: "primary",
           onPress: () => alert("Funcionou")
+        },
+        {
+          text: "Câmera",
+          icon: "camera",
+          variant: "primary",
+          onPress: () => alert("Funcionou")
         }
       ]
     })

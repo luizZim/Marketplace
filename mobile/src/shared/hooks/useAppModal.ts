@@ -3,11 +3,13 @@ import { useModalStore } from "../store/modal-store"
 import { createElement } from "react";
 import { SelectionModal, SelectionModalProps } from "../components/Modals/SelectionModal";
 
+export type SelectionVariant = "primary" | "secundary" | "danger";
+
 export interface SelectionOptions {
   text: string;
   onPress: () => void;
   icon?: keyof typeof Ionicons.glyphMap;
-  variant: "primary" | "secundary" | "danger"
+  variant: SelectionVariant
 }
 
 
