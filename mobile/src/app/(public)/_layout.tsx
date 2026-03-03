@@ -5,13 +5,11 @@ export default function PrivateLayout() {
 
   const { user, token } = useUserStore();
 
-  if (!user || !token) {
-    return <Redirect href="/(public)/login" />
+  if (user && token) {
+    return <Redirect href="/(private)/home" />
   }
 
   return (
-    <Stack >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <Stack screenOptions={{ headerShown: false }} />
   )
 }

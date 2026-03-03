@@ -43,7 +43,7 @@ export const LoginView: FC<ReturnType<typeof useLoginViewModel>> = ({
 
         <View className="flex-2 pb-16">
           <Text className="text-base mb-6 text-gray-300">Ainda não tem uma conta?</Text>
-          <AppButton variant="outlined" rightIcon="arrow-forward" onPress={() => router.push("/register")}>Registro</AppButton>
+          <AppButton variant="outlined" rightIcon="arrow-forward" onPress={() => router.push("/(public)/register")}>Registro</AppButton>
         </View>
       </View>
     </KeyboardContainer >

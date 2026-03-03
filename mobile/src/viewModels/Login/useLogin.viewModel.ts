@@ -6,7 +6,6 @@ import { useUserStore } from "../../shared/store/user-store";
 
 export const useLoginViewModel = () => {
   const { user } = useUserStore()
-  console.log(user)
   const { control, handleSubmit } = useForm<LoginFormData>({
     resolver: yupResolver(loginScheme),
     defaultValues: {
@@ -18,7 +17,6 @@ export const useLoginViewModel = () => {
 
   const onSubmit = handleSubmit(async (userFormData) => {
     const userData = await loginMutation.mutateAsync(userFormData)
-    console.log(userData)
   })
 
   return { control, onSubmit };
