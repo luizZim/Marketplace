@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useModalStore } from "../store/modal-store"
 import { createElement } from "react";
 import { SelectionModal, SelectionModalProps } from "../components/Modals/SelectionModal";
+import { SuccessModal, SuccessModalParams } from "../components/Modals/SuccessModal";
 
 export type SelectionVariant = "primary" | "secundary" | "danger";
 
@@ -20,5 +21,19 @@ export const useAppModal = () => {
     open(createElement(SelectionModal, { options, title, message } as SelectionModalProps))
   }
 
-  return { showSelection }
+  const showSuccess = (config: SuccessModalParams) => {
+    open(
+      createElement(SuccessModal, {
+        ...config,
+        onButtonPress: () => {
+          if (config.onButtonPress) {
+            config.onButtonPress();
+          }
+          close();
+        },
+      })
+    );
+  };
+
+  return { showSelection, showSuccess }
 }

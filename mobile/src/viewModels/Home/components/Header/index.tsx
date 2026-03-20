@@ -2,6 +2,7 @@ import { TouchableOpacity, View, Image, Text } from "react-native"
 import { useUserStore } from "../../../../shared/store/user-store"
 import { Ionicons } from "@expo/vector-icons"
 import { colors } from "../../../../styles/colors"
+import { router } from "expo-router"
 
 export const HomeHeader = () => {
 
@@ -9,7 +10,7 @@ export const HomeHeader = () => {
 
   return (
     <View>
-      <TouchableOpacity className="flex-row items-center gap-6">
+      <TouchableOpacity onPress={() => router.push("profile")} className="flex-row items-center gap-6">
         <View className="relative">
           {
             user?.avatarUrl ? (

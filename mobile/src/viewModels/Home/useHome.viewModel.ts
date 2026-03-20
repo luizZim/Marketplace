@@ -1,6 +1,9 @@
-import { useProductInfiniteQuery } from "../../shared/queries/auth/product/use-product-infinite.query";
+import { useProductInfinityQuery } from "../../shared/queries/product/use-product-infinite.query";
+import { useFilterStore } from "../../shared/store/use-filter-store";
 
 export const useHomeViewModel = () => {
+
+  const { appliedFilterState } = useFilterStore()
 
   const {
     error,
@@ -11,7 +14,7 @@ export const useHomeViewModel = () => {
     refetch,
     products,
     isRefetching
-  } = useProductInfiniteQuery()
+  } = useProductInfinityQuery({ filters: appliedFilterState })
 
   const handleLoadMore = () => {
     if (hasNextPage && !isFetchingNextPage && !isLoading) {
@@ -27,11 +30,14 @@ export const useHomeViewModel = () => {
     handleLoadMore();
   }
 
-  console.log(JSON.stringify(products, null, 2))
   return {
     handleLoadMore,
     handleRefresh,
     products,
-    handleEndReached
+    handleEndReached,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    isRefetching
   };
 }
