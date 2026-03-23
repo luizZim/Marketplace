@@ -11,13 +11,17 @@ import { Header } from "./components/Header"
 export const ProfileView: FC<ReturnType<typeof useProfileViewModel>> = ({
   avatarUri,
   control,
-  onSubmit
+  onSubmit,
+  isSubmitting,
+  handleLogout,
+  handleSelectImage
 }) => {
   return (
     <KeyboardContainer>
       <ScrollView className="flex-1 px-[40px]">
-        <Header />
+        <Header handleLogout={handleLogout} />
         <TouchableOpacity
+          onPress={handleSelectImage}
           className="w-[120px] h-[120px] rounded-[12px] items-center justify-center bg-shape self-center mb-8 mt-6"
         >
           {
@@ -64,7 +68,7 @@ export const ProfileView: FC<ReturnType<typeof useProfileViewModel>> = ({
           leftIcon="lock-closed-outline"
           control={control}
           name="password"
-          label="SENHA"
+          label="SENHA ATUAL"
           placeholder="Sua senha"
           secureTextEntry
         />
@@ -72,13 +76,19 @@ export const ProfileView: FC<ReturnType<typeof useProfileViewModel>> = ({
         <AppInputController
           leftIcon="lock-closed-outline"
           control={control}
-          name="confirmPassword"
-          label="CONFIRMAR SENHA"
-          placeholder="Confirme a senha"
+          name="newPassword"
+          label="NOVA SENHA"
+          placeholder="Sua nova senha"
           secureTextEntry
         />
 
-        <AppButton className="mt-6" onPress={onSubmit}>Atualizar cadastro</AppButton>
+        <AppButton
+          className="mt-6"
+          onPress={onSubmit}
+          isLoading={isSubmitting}
+        >
+          Atualizar cadastro
+        </AppButton>
       </ScrollView>
     </KeyboardContainer>
   )

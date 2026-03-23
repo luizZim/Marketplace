@@ -3,9 +3,13 @@ import { TouchableOpacity, View, Text } from "react-native"
 import { colors } from "../../../../styles/colors"
 import { router } from "expo-router"
 import { useUserStore } from "../../../../shared/store/user-store"
+import { FC } from "react"
 
-export const Header = () => {
-  const { logout } = useUserStore()
+interface HeaderParams {
+  handleLogout: () => void;
+}
+
+export const Header: FC<HeaderParams> = ({ handleLogout }) => {
   return (
     <View className="flex-row items-center justify-between py-3 border-shape">
       <TouchableOpacity
@@ -17,7 +21,7 @@ export const Header = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={logout}
+        onPress={handleLogout}
         className="flex-row items-center gap-1"
       >
         <Ionicons name="log-out-outline" color={colors.danger} size={20} />

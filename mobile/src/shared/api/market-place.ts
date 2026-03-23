@@ -32,26 +32,27 @@ export class MarketPlaceApiClient {
   }
 
   private setupInterceptors() {
-    this.instance.interceptors.request.use(async (config) => {
-      const userData = await AsyncStorage.getItem('marketplace-auth')
+    this.instance.interceptors.request.use(
+      async (config) => {
+        const userData = await AsyncStorage.getItem('marketplace-auth')
 
-      if (userData) {
-        const { state: { token } } = JSON.parse(userData)
+        if (userData) {
+          const { state: { token } } = JSON.parse(userData)
 
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`
+          if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+          }
         }
-      }
 
-      return config
-    }, (error) => {
-      return Promise.reject(error);
-    });
+        return config
+      }, (error) => {
+        return Promise.reject(error);
+      });
 
     this.instance.interceptors.response.use(
       (response) => response,
       async (error) => {
-        const originalRequest = error.configure
+        const originalRequest = error.config
 
         if (
           error.response?.status === 401 &&
@@ -95,7 +96,7 @@ export class MarketPlaceApiClient {
             this.handleUnauthorized()
             return Promise.reject(new Error("sessão expirada, faça o login novamente."))
           } finally {
-            this, this.isRefreshing = false
+            this.isRefreshing = false
           }
         }
 
@@ -110,7 +111,7 @@ export class MarketPlaceApiClient {
 
   private async handleUnauthorized() {
     const { logout } = useUserStore.getState()
-    delete this.instance.defaults.headers.common['Authorization']
+    delete this.instance.defaults.headers.common.Authorization
     logout()
   }
 }

@@ -83,7 +83,7 @@ export const AppInput: FC<AppInputProps> = ({
         {
           secureTextEntry && (
             <TouchableOpacity activeOpacity={0.7} onPress={handlePasswordToggle}>
-              <Ionicons size={22} name={showPassword ? "eye-outline" : "eye-off-outline"} />
+              <Ionicons size={22} name={showPassword ? "eye-off-outline" : "eye-outline"} />
             </TouchableOpacity>
           )
         }

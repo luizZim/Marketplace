@@ -14,7 +14,7 @@ interface KeyboardContainerProps {
 
 export const KeyboardContainer: FC<KeyboardContainerProps> = ({ children }) => {
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView  className="flex-1 mb-6">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1"

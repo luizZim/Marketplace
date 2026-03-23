@@ -10,6 +10,10 @@ export const register = async (userData: RegisterHttpParams) => {
     userData
   )
 
+  if (data.user.avatarUrl) {
+    data.user.avatarUrl = `${baseURL}${data.user.avatarUrl}`
+  }
+
   return data
 }
 
@@ -18,6 +22,11 @@ export const login = async (userData: LoginHttpParams) => {
     "/auth/login",
     userData
   )
+
+  if (data.user.avatarUrl) {
+    data.user.avatarUrl = `${baseURL}${data.user.avatarUrl}`
+  }
+
   return data
 }
 
@@ -31,7 +40,9 @@ export const uploadAvatar = async (avatarUri: string) => {
     name: "avatar.jpg"
   } as unknown as Blob)
 
-  const { data } = await marketPlaceApiClient.post<UploadAvatarResponse>("/user/avatar", formData);
+  const { data } = await marketPlaceApiClient.post<UploadAvatarResponse>("/user/avatar", formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
 
   data.url = `${baseURL}${data.url}`
 

@@ -50,7 +50,7 @@ export class AuthenticateUseCase {
       refreshToken,
       user: {
         ...user,
-        avatarUrl: user.avatar.url,
+        avatarUrl: user.avatar?.url ?? undefined,
       },
     };
   }
