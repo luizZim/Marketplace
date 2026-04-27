@@ -1,4 +1,4 @@
-import { createElement } from "react"
+import { createElement, useEffect } from "react"
 import { useGetCommentsInfiniteQuery } from "../../shared/queries/product/use-get-product-comment-infinity.query"
 import { useGetProductDetailQuery } from "../../shared/queries/product/use-get-product-detail"
 import { useCartStore } from "../../shared/store/cart-store"
@@ -7,9 +7,10 @@ import { AddToCartSuccessModal } from "./components/AddToCardSuccessModal"
 import { router } from "expo-router"
 import { useBottomSheetStore } from "../../shared/store/bottomSheet-store"
 import { ReviewBottomSheet } from "./components/ReviewBottomSheet"
+import { localNotificationsService } from "../../shared/services/local-notifications.service"
 
 
-export const useProductViewModel = (productId: number) => {
+export const useProductViewModel = (productId: number, openFeedbackBottomsheet: boolean) => {
 
   const {
     data: productDetails,
@@ -66,6 +67,12 @@ export const useProductViewModel = (productId: number) => {
       name: productDetails.name,
       price: productDetails.value,
       image: productDetails.photo
+    });
+
+    localNotificationsService.scheduleCartReminder({
+      delayInMinutes: 30,
+      productId: productDetails.id,
+      productName: productDetails.name
     })
 
     open(createElement(AddToCartSuccessModal, {
@@ -86,6 +93,12 @@ export const useProductViewModel = (productId: number) => {
       }),
     });
   }
+
+  useEffect(() => {
+    if (openFeedbackBottomsheet) {
+      handleOpenReview()
+    }
+  }, [openFeedbackBottomsheet, productDetails])
 
   return {
     productDetails,

@@ -2,20 +2,19 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Stack } from "expo-router"
 import { Appearance } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-
-// Força light mode globalmente — evita que o dark mode do sistema
-// deixe textos e inputs brancos, já que o app não suporta dark mode.
-Appearance.setColorScheme('light')
 import ToastManager from 'toastify-react-native'
 import { AppModal } from "../shared/components/AppModal"
-import { useUserStore } from "../shared/store/user-store"
 import '../styles/global.css'
+import { useNotifications } from "../shared/hooks/useNotifications"
+import { useOneSignal } from "../shared/hooks/useOneSignal"
+
+Appearance.setColorScheme('light')
 
 const queryClient = new QueryClient()
 
 export default function RootLayout() {
-
-  const { token } = useUserStore()
+  useNotifications();
+  useOneSignal();
 
   return (
     <GestureHandlerRootView className="flex-1">

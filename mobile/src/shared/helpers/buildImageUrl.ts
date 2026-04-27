@@ -1,13 +1,10 @@
 import Constants from "expo-constants";
-import { Platform } from "react-native";
 
 export const buildImageUrl = (originalUrl: string) => {
+  console.log(originalUrl)
   if (Boolean(Constants.expoConfig?.extra?.isProduction)) {
     return originalUrl
   }
 
-  return Platform.select({
-    android: originalUrl.replace("localhost", "192.168.15.183"),
-    ios: originalUrl
-  })
+  return originalUrl.replace("localhost", "192.168.3.118")
 }

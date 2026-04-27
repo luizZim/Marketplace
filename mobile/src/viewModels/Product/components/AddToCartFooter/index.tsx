@@ -12,9 +12,17 @@ interface AddToCartFooterParams {
 
 export const AddToCartFooter: FC<AddToCartFooterParams> = ({ product, handleAddToCart }) => {
   return (
-    <View className="fixed justify-between items-center bg-white bottom-0 right-0 left-0 p-7 h-[126px] flex-row">
+    <View
+      className="fixed justify-between items-center bg-white bottom-0 right-0 left-0 p-7 h-[126px] flex-row"
+    >
       <AppPriceText value={Number(product.value)} />
-      <AppButton onPress={handleAddToCart} className="w-[120px] h-[40px]" leftIcon="cart">Adicionar</AppButton>
+      <AppButton
+        onPress={handleAddToCart}
+        className="w-[120px] h-[40px]"
+        leftIcon="cart"
+      >
+        Adicionar
+      </AppButton>
     </View>
   )
 }

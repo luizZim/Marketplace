@@ -12,6 +12,7 @@ import { AppButton } from "../../../../shared/components/AppButton";
 import { AppPriceText } from "../../../../shared/components/AppPriceText";
 import { colors } from "../../../../styles/colors";
 import { CreditCardItem } from "../CreditCardItem";
+import { PaymentMethodTabs } from "../PaymentMethodTabs";
 import { useCartFooterViewModel } from "./useCartFooter.viewModel";
 
 export const CartFooterView: FC<
@@ -24,7 +25,11 @@ export const CartFooterView: FC<
   selectedCreditCard,
   setSelectedCreditCard,
   submitOrderMutation,
-  isOrderLoading
+  isOrderLoading,
+  paymentMethod,
+  setPaymentMethod,
+  submitPixPayment,
+  isPixLoading,
 }) => {
     return (
       <View className="bg-white p-4 rounded-lg mt-6">
@@ -37,56 +42,80 @@ export const CartFooterView: FC<
           />
         </View>
 
-        <View className="mb-4">
-          <View className="flex-row justify-between items-center mb-3">
-            <Text className="text-[10px] font-semibold text-gray-600">
-              CARTÕES DE CRÉDITO
-            </Text>
+        <PaymentMethodTabs
+          selectedMethod={paymentMethod}
+          onSelectMethod={setPaymentMethod}
+          creditCardContent={
+            <View>
+              <View className="flex-row justify-between items-center mb-3">
+                <Text className="text-[10px] font-semibold text-gray-600">
+                  CARTÕES DE CRÉDITO
+                </Text>
 
-            <TouchableOpacity
-              onPress={openCartBottomSheet}
-              className="flex-row items-center"
-            >
-              <Ionicons
-                name="card-outline"
-                size={20}
-                color={colors["purple-base"]}
-              />
-              <Text className="text-purple-base ml-2 text-sm font-bold">
-                Adicionar cartão
-              </Text>
-            </TouchableOpacity>
-          </View>
+                <TouchableOpacity
+                  onPress={openCartBottomSheet}
+                  className="flex-row items-center"
+                >
+                  <Ionicons
+                    name="card-outline"
+                    size={20}
+                    color={colors["purple-base"]}
+                  />
+                  <Text className="text-purple-base ml-2 text-sm font-bold">
+                    Adicionar cartão
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
-          {loadingCreditCards ? (
-            <View className="py-4 items-center">
-              <ActivityIndicator size={"small"} color={colors["purple-base"]} />
-              <Text className="text-gray-500 text-sm mt-2">
-                Carregando cartões...
-              </Text>
-            </View>
-          ) : (
-            <FlatList
-              className="gap-2"
-              data={creditCards}
-              renderItem={({ item: creditCard }) =>
-                <CreditCardItem
-                  isSelected={creditCard.id === selectedCreditCard?.id}
-                  setSelectedCreditCard={setSelectedCreditCard}
-                  creditCard={creditCard}
+              {loadingCreditCards ? (
+                <View className="py-4 items-center">
+                  <ActivityIndicator size={"small"} color={colors["purple-base"]} />
+                  <Text className="text-gray-500 text-sm mt-2">
+                    Carregando cartões...
+                  </Text>
+                </View>
+              ) : (
+                <FlatList
+                  className="gap-2"
+                  data={creditCards}
+                  renderItem={({ item: creditCard }) =>
+                    <CreditCardItem
+                      isSelected={creditCard.id === selectedCreditCard?.id}
+                      setSelectedCreditCard={setSelectedCreditCard}
+                      creditCard={creditCard}
+                    />
+                  }
                 />
-              }
-            />
-          )}
+              )}
 
-          <AppButton
-            onPress={submitOrderMutation}
-            className="mt-4"
-            isLoading={isOrderLoading}
-          >
-            Confirmar Compra
-          </AppButton>
-        </View>
+              <AppButton
+                onPress={submitOrderMutation}
+                className="mt-4"
+                isLoading={isOrderLoading}
+              >
+                Confirmar Compra
+              </AppButton>
+            </View>
+          }
+          pixContent={
+            <View className="items-center py-4">
+              <Ionicons name="qr-code-outline" size={48} color={colors["purple-base"]} />
+              <Text className="text-sm text-gray-400 mt-3 mb-1 text-center">
+                Pague instantaneamente usando PIX
+              </Text>
+              <Text className="text-xs text-gray-300 mb-4 text-center">
+                Um QR Code sera gerado para voce realizar o pagamento
+              </Text>
+              <AppButton
+                onPress={submitPixPayment}
+                className="w-full"
+                isLoading={isPixLoading}
+              >
+                Pagar com PIX
+              </AppButton>
+            </View>
+          }
+        />
       </View>
     );
   };

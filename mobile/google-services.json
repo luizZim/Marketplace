@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "545010492446",
+    "project_id": "marketplace-push-notific-bc8b9",
+    "storage_bucket": "marketplace-push-notific-bc8b9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545010492446:android:58399c5e5578593b36ba0f",
+        "android_client_info": {
+          "package_name": "com.luizzim.marketplaceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAuZz6z1r3evAiGFCRU4SrFDflIA75Tls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

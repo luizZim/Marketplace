@@ -4,7 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { CreditCardFormData, creditCardSchema } from "./credit-card.schema"
 import { useBottomSheet } from "@gorhom/bottom-sheet"
 import { useBottomSheetStore } from "../../../../shared/store/bottomSheet-store"
+import { useRef, useState } from "react"
 
+export type FocusedField = "number" | "name" | "expire" | "cvv"
 
 const formatExpirationDateFormApi = (dateString: string, setError: (message: string) => void): string => {
   const [month, year] = dateString.split("/").map(Number)
@@ -30,6 +32,9 @@ const formatExpirationDateFormApi = (dateString: string, setError: (message: str
 
 export const useAddCardBottomSheetViewModel = () => {
   const createCreditCardMutation = useCreateCreditCardMutation()
+  const [focusedField, setFocusedField] = useState<FocusedField | null>(null)
+
+  const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const { close: closeBottomSheet } = useBottomSheetStore()
 
@@ -75,9 +80,42 @@ export const useAddCardBottomSheetViewModel = () => {
 
   const cardNumberMask = (value: string) => {
     const cleaned = value.replace(/\D/g, "")
-
     return cleaned.replace(/(\d{4})(?=\d)/g, "$1 ").trim()
   }
 
-  return { handleCreateCreditCard, control, expirationDateMask, cardNumberMask }
+  const handleFieldFocus = (field: FocusedField) => {
+    if (blurTimeoutRef.current) {
+      clearTimeout(blurTimeoutRef.current)
+    }
+
+    setFocusedField(field)
+  }
+
+  const handleFieldBlur = () => {
+    blurTimeoutRef.current = setTimeout(() => {
+      setFocusedField(null)
+    }, 50)
+  }
+
+  const isFlipped = focusedField === "cvv";
+
+  const watchedValue = watch()
+
+  return {
+    handleCreateCreditCard,
+    closeBottomSheet,
+    control,
+    expirationDateMask,
+    cardNumberMask,
+    isFlipped,
+    handleFieldBlur,
+    handleFieldFocus,
+    focusedField,
+    cardData: {
+      number: watchedValue.number,
+      name: watchedValue.titularName,
+      expire: watchedValue.expirationDate,
+      cvv: watchedValue.CVV
+    }
+  }
 }
