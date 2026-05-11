@@ -4,13 +4,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
-  const {bottom} = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
 
   return (
     <Tabs screenOptions={{
       headerShown: false,
       tabBarStyle: {
-        height: bottom > 0 ? 65 + bottom : 110,
+        height: bottom > 0 ? 70 + bottom : 110,
         paddingTop: 12,
       }
     }}>

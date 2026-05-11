@@ -6,5 +6,5 @@ export const buildImageUrl = (originalUrl: string) => {
     return originalUrl
   }
 
-  return originalUrl.replace("localhost", "192.168.3.118")
+  return originalUrl.replace("localhost", "192.168.3.240")
 }

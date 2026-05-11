@@ -7,10 +7,15 @@ import { useUserStore } from "../../shared/store/user-store"
 import { RegisterFormData, registerScheme } from "./register.scheme"
 import { CameraType } from 'expo-image-picker'
 import { useUploadAvatarMutation } from '../../shared/queries/auth/use-upload-avatar.mutation'
+import { useOneSignal } from '../../shared/hooks/useOneSignal'
 
 export const useRegisterViewModel = () => {
   const { setSession, updateUser } = useUserStore()
+  const { playerId } = useOneSignal()
+
   const [avatarUri, setAvatarUri] = useState<string | null>(null)
+
+
   const { handleSelectImage } = useImage({
     callback: setAvatarUri,
     cameraType: CameraType.front
@@ -48,7 +53,10 @@ export const useRegisterViewModel = () => {
 
   const onSubmit = handleSubmit(async (userData) => {
     const { confirmPassword, ...registerData } = userData
-    await userRegisterMutation.mutateAsync(registerData)
+    await userRegisterMutation.mutateAsync({
+      ...registerData,
+      notificationToken: playerId
+    })
 
   })
 

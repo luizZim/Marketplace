@@ -1,15 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosInstance } from "axios";
-import { use } from "react";
 import { Platform } from "react-native";
-import { configure } from '../../../../backend/src/infra/web/routes/credit-card.routes';
-import { refreshTokenSchema } from '../../../../backend/src/infra/web/routes/schemas/authentication/refresh-token.schema';
 import { useUserStore } from "../store/user-store";
 
 const getBaseURL = () => {
   return Platform.select({
     ios: 'http://localhost:3001',
-    android: 'http://192.168.3.118:3001',
+    android: 'http://192.168.3.240:3001',
   });
 };
 
